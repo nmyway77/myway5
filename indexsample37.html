@@ -689,6 +689,7 @@
         
 
 
+
   <style>
     body { background: #fff; font-family: 'Segoe UI','맑은 고딕','NanumGothic',Arial,sans-serif; margin:0; padding:0;}
     .dashboard { max-width: 1200px; margin: 0 auto; padding: 34px 0 60px 0;}
@@ -700,9 +701,7 @@
       width: 100%; max-width: 1200px; margin: 0 auto;
       text-align: center;
     }
-    
-    /* 화면3 전용 스타일 */
-    #gallery3 .list-row {
+    .list-row {
       display: inline-block;
       vertical-align: top;
       width: 120px;   /* magazine */
@@ -713,8 +712,8 @@
       position: relative;
       transition: width 0.2s, height 0.2s;
     }
-    #gallery3 .list-row:last-child { margin-right: 0; }
-    #gallery3 .imgframe {
+    .list-row:last-child { margin-right: 0; }
+    .imgframe {
       width: 100%; height: 100%;
       background: #fff;
       position: relative;
@@ -727,9 +726,9 @@
       align-items: flex-start;
       justify-content: center;
     }
-    #gallery3 .img-wrap { position: relative; height: 100%; width: 100%; overflow: hidden; margin:0; padding:0;}
-    #gallery3 .img-item { position: relative; width: 100%; height: 100%; overflow: hidden;}
-    #gallery3 .img-item img {
+    .img-wrap { position: relative; height: 100%; width: 100%; overflow: hidden; margin:0; padding:0;}
+    .img-item { position: relative; width: 100%; height: 100%; overflow: hidden;}
+    .img-item img {
       display: block; width: 100%; height: 100%;
       object-fit: contain;
       background: #fff;
@@ -737,12 +736,11 @@
       border: none;
       padding: 0;
     }
-    #gallery3 .shadow-line { text-align: center; margin: 0; padding: 0; max-width: 100%; overflow: hidden !important; vertical-align: top;}
-    #gallery3 .shadow-line img { display: block; margin: 0 auto; width: 95%; height: 20px; pointer-events: none; user-select: none; }
-    
-    /* 반응형: 화면 폭에 따라 열 개수 자동 조정 */
+    .shadow-line { text-align: center; margin: 0; padding: 0; max-width: 100%; overflow: hidden !important; vertical-align: top;}
+    .shadow-line img { display: block; margin: 0 auto; width: 95%; height: 20px; pointer-events: none; user-select: none; }
+    /* 모두 매거진 스타일! */
     @media (max-width: 1080px) {
-      #gallery3 .list-row {
+      .list-row {
         width: 16vw;
         height: 22vw;
         min-width: 80px;
@@ -751,7 +749,7 @@
       }
     }
     @media (max-width: 700px) {
-      #gallery3 .list-row {
+      .list-row {
         width: 31vw;
         height: 44vw;
         min-width: 65px;
@@ -771,33 +769,37 @@
     <span class="gallery-label">갤러리 4 (매거진)</span>
     <div class="gallery-row" id="gallery4"></div>
   </div>
+
   <script>
     // 갤러리1~4 예시 데이터 (글자 없이 url, img만)
     const gallery1Data = [
       { url: "https://www.bing.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
       { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
-      // ... 추가 데이터
+      { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
+      // 더 많은 데이터를 추가할 수 있음
     ];
     const gallery2Data = [
       { url: "https://www.bing.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
       { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
-      // ... 추가 데이터
+      { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
+      // 더 많은 데이터를 추가할 수 있음
     ];
     const gallery3Data = [
       { url: "https://www.bing.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
       { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
-      // ... 추가 데이터
+      { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
+      // 더 많은 데이터를 추가할 수 있음
     ];
     const gallery4Data = [
       { url: "https://www.bing.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
       { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
-      // ... 추가 데이터
+      { url: "https://duckduckgo.com/", img: "https://64.media.tumblr.com/1aa90add760dfa7d745de3c2bd83ed57/tumblr_inline_qqnwi4R5op1r45nlo_500.jpg" },
+      // 더 많은 데이터를 추가할 수 있음
     ];
 
-    // 그림자 png (필요시 주소 교체)
     const shadowUrl = "https://64.media.tumblr.com/f5f06009df6584ebb5539cad61f73c63/tumblr_inline_qsghz3XZRQ1r45nlo_500.png";
 
-    // 각 갤러리 렌더링
+    // 모두 매거진 스타일!
     function renderGallery(data, targetId) {
       const el = document.getElementById(targetId);
       el.innerHTML = data.map(item => `
@@ -817,8 +819,7 @@
         </div>
       `).join('');
     }
-    
-    // 각 갤러리 데이터 렌더링
+
     renderGallery(gallery1Data, 'gallery1');
     renderGallery(gallery2Data, 'gallery2');
     renderGallery(gallery3Data, 'gallery3');

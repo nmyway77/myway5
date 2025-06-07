@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -147,24 +147,516 @@
   <div class="screen-content">
     <!-- 화면 1 (iframe 삽입) -->
     <div id="screen-block-1" class="screen-block active">
-      <iframe src="화면1_주소.html"></iframe> <!-- 화면 1 URL -->
+      <iframe src="screen1.html"></iframe> <!-- 화면 1 URL -->
     </div>
 
     <!-- 화면 2 (iframe 삽입) -->
     <div id="screen-block-2" class="screen-block">
-      <iframe src="화면2_주소.html"></iframe> <!-- 화면 2 URL -->
+      <iframe src="mainpage2.html"></iframe> <!-- 화면 2 URL -->
     </div>
 
     <!-- 화면 3 (iframe 삽입) -->
     <div id="screen-block-3" class="screen-block">
-      <iframe src="화면3_주소.html"></iframe> <!-- 화면 3 URL -->
+      <iframe src="mainpage3.html"></iframe> <!-- 화면 3 URL -->
     </div>
 
+
+
+   
     <!-- 화면 4 (기존 디자인 유지) -->
     <div id="screen-block-4" class="screen-block">
+
+     
       <h2>미디어 관리</h2>
       <p>이곳은 미디어 관리 화면입니다.</p>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      font-family: 'Segoe UI', '맑은 고딕', Arial, sans-serif;
+    }
+
+    #controls {
+      position: fixed;
+      top: 140px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    #controls button {
+      padding: 6px 10px;
+      background: #3C3C8C;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #controls button:nth-child(2) {
+      background: #007bff;
+    }
+
+    #controls button:nth-child(3) {
+      background: #ffc107;
+      color: #000;
+    }
+
+    #folder-select {
+      margin-left: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    #modal {
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      width: 320px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    #modal h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    #modal input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .auto-thumb-btn {
+      background: #eee;
+      color: #333;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 13px;
+      margin-bottom: 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .actions {
+      text-align: right;
+    }
+
+    .actions button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 14px;
+    }
+
+    .save-btn {
+      background: #28a745;
+      color: #fff;
+    }
+
+    .cancel-btn {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    #media-grid {
+      column-count: 5;
+      column-gap: 10px;
+      margin: 60px auto 20px;
+      width: 100%;
+      max-width: 1400px;
+    }
+
+    .grid-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      position: relative;
+      background: #fff;
+      box-shadow: 0 1px 6px #d0d0ff44;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      color: #fff;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    #html-editor,
+    #html-preview {
+      border-color: white;
+    }
+
+    #html-edit-btn {
+      display: block;
+      margin: 0;
+      padding: 8px 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      position: relative;
+      top: 20px;
+    }
+
+    #html-editor {
+      display: none;
+      width: 100%;
+      height: 300px;
+      font-family: monospace;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+      background: #f0f8ff;
+      border-color: #007bff;
+    }
+
+    #html-preview {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background: white;
+    }
+
+    .editor-space {
+      height: 80px;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 1100px) {
+      #media-grid {
+        column-count: 4;
+      }
+    }
+
+    @media (max-width: 800px) {
+      #media-grid {
+        column-count: 3;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #media-grid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 420px) {
+      #media-grid {
+        column-count: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #media-grid {
+        margin-top: 20px; /* Adjust the margin-top to reduce gap on smaller screens */
+      }
+    }
+
+  </style>
+  <!-- 드래그 정렬용 SortableJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+  <div id="controls">
+    <button id="save-media-btn">미디어 저장</button>
+    <button id="export-btn">내보내기</button>
+    <button id="import-btn">가져오기</button>
+    <input type="file" id="import-file" accept="application/json" style="display:none">
+    <select id="folder-select"><option value="">전체 폴더</option></select>
+  </div>
+
+  <h2 style="text-align: center; margin-top: 20px;">디스플레이형 즐겨찾기 만들기</h2>
+  <p style="text-align: center;">
+    <a href="https://myway.kr/howtouse.html">이용방법안내&nbsp;</a> &nbsp; &nbsp;
+    <a href="https://html5-editor.net/">웹에디터&nbsp;</a>
+  </p>
+
+  <div id="media-grid"></div>
+  <div class="editor-space"></div>
+  <button id="html-edit-btn">편집</button>
+  <textarea id="html-editor" placeholder="HTML 코드 편집"></textarea>
+  <div id="html-preview"></div>
+
+  <div id="modal-overlay">
+    <div id="modal">
+      <h3>미디어 저장</h3>
+      <input type="text" id="img-url" placeholder="사진 URL 입력" autofocus>
+      <button type="button" class="auto-thumb-btn" id="auto-thumb-btn">썸네일 자동찾기</button>
+      <input type="text" id="link-url" placeholder="연결 링크 입력">
+      <input type="text" id="media-folder" placeholder="폴더/디렉토리 (예: 여행)">
+      <div class="actions">
+        <button class="cancel-btn">취소</button>
+        <button class="save-btn">저장</button>
+      </div>
     </div>
+  </div>
+
+  <script>
+    // 기본 코드 기능 유지 (미디어 저장, 가져오기, 내보내기, 편집 기능 등)
+    const STORAGE_KEY = 'mediaList_uniquegrid';
+    const HTML_KEY = 'mediaHtmlContent_uniquegrid';
+
+    function extractYouTubeId(url) {
+      const regex = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([a-zA-Z0-9_-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    const saveBtn = document.getElementById('save-media-btn'),
+      exportBtn = document.getElementById('export-btn'),
+      importBtn = document.getElementById('import-btn'),
+      importFile = document.getElementById('import-file'),
+      overlay = document.getElementById('modal-overlay'),
+      cancelBtn = document.querySelector('.cancel-btn'),
+      confirmBtn = document.querySelector('.save-btn'),
+      imgInput = document.getElementById('img-url'),
+      linkInput = document.getElementById('link-url'),
+      folderInput = document.getElementById('media-folder'),
+      folderSelect = document.getElementById('folder-select'),
+      gridContainer = document.getElementById('media-grid'),
+      autoThumbBtn = document.getElementById('auto-thumb-btn');
+    let editingIndex = null;
+
+    saveBtn.onclick = () => openModal();
+    function openModal(item, idx) {
+      if (item) {
+        imgInput.value = item.imgUrl;
+        linkInput.value = item.linkUrl;
+        folderInput.value = item.folder || '';
+        confirmBtn.textContent = '수정';
+        editingIndex = idx;
+      } else {
+        imgInput.value = '';
+        linkInput.value = '';
+        folderInput.value = '';
+        confirmBtn.textContent = '저장';
+        editingIndex = null;
+      }
+      overlay.style.display = 'flex';
+      imgInput.focus();
+    }
+    cancelBtn.onclick = () => { overlay.style.display = 'none'; editingIndex = null; };
+
+    autoThumbBtn.onclick = function() {
+      const linkVal = linkInput.value.trim() || imgInput.value.trim();
+      const youtubeId = extractYouTubeId(linkVal);
+      if (youtubeId) {
+        imgInput.value = `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
+        alert('유튜브 썸네일이 자동으로 입력되었습니다!');
+      } else {
+        alert('유튜브 영상 링크를 입력해 주세요.');
+      }
+    };
+
+    confirmBtn.onclick = () => {
+      const iurl = imgInput.value.trim();
+      if (!iurl) { alert('사진 URL을 입력해주세요.'); imgInput.focus(); return; }
+      let lurl = linkInput.value.trim();
+      if (!lurl) { alert('연결 링크를 입력해주세요.'); linkInput.focus(); return; }
+      if (!/^https?:\/\//i.test(lurl)) lurl = 'https://' + lurl;
+      const folder = folderInput.value.trim();
+      let list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const data = { imgUrl: iurl, linkUrl: lurl, folder };
+      if (editingIndex !== null) list[editingIndex] = data;
+      else list.push(data);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      overlay.style.display = 'none';
+      folderSelect.value = "";
+      renderGrid();
+      editingIndex = null;
+    };
+
+    exportBtn.onclick = () => {
+      const mediaList = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const gridContent = gridContainer.innerHTML;
+      const htmlContent = htmlPreview.innerHTML;
+      const data = {
+        mediaList: mediaList,
+        gridContent: gridContent,
+        htmlContent: htmlContent
+      };
+      const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mediaList_and_html.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    importBtn.onclick = () => importFile.click();
+    importFile.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (Array.isArray(data.mediaList)) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data.mediaList));
+            folderSelect.value = "";
+            renderGrid();
+          }
+          if (data.htmlContent) {
+            htmlPreview.innerHTML = data.htmlContent;
+            htmlEditor.value = data.htmlContent;
+            localStorage.setItem(HTML_KEY, data.htmlContent);
+          }
+          alert('데이터가 복원되었습니다.');
+        } catch {
+          alert('파일 읽기 중 오류가 발생했습니다.');
+        }
+      };
+      reader.readAsText(file);
+      importFile.value = null;
+    };
+
+    function updateFolderSelect(folders) {
+      folderSelect.innerHTML = `<option value="">전체 폴더</option>`;
+      folders.forEach(f=> {
+        const opt = document.createElement('option');
+        opt.value = f; opt.innerText = f;
+        folderSelect.appendChild(opt);
+      });
+    }
+
+    function renderGrid() {
+      let list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const curFolder = folderSelect.value;
+      if (curFolder) list = list.filter(x=>x.folder===curFolder);
+      gridContainer.innerHTML = '';
+      list.slice(0, 500).forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'grid-item';
+        card.style.position = 'relative';
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = '';
+        img.onerror = function() {
+          this.src = 'https://via.placeholder.com/300x180/ccc/fff?text=Image+Not+Found';
+        }
+        img.addEventListener('click', () => window.open(item.linkUrl, '_blank'));
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.textContent = '수정';
+        editBtn.addEventListener('click', e => { e.stopPropagation(); openModal(item, idx); });
+        card.append(img, editBtn);
+        gridContainer.append(card);
+      });
+
+      // 드래그 정렬(폴더별도 적용)
+      Sortable.create(gridContainer, {
+        animation: 150,
+        onEnd: function (evt) {
+          let allList = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+          const curFolder = folderSelect.value;
+          if(curFolder) {
+            const indices = [];
+            allList.forEach((x,i)=>{ if(x.folder===curFolder) indices.push(i); });
+            const [movedIdx] = indices.splice(evt.oldIndex,1);
+            indices.splice(evt.newIndex,0,movedIdx);
+            const reordered = indices.map(i=>allList[i]);
+            let cnt=0;
+            allList = allList.map(x=>
+              x.folder===curFolder ? reordered[cnt++] : x
+            );
+          } else {
+            const [moved] = allList.splice(evt.oldIndex, 1);
+            allList.splice(evt.newIndex, 0, moved);
+          }
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(allList));
+          renderGrid();
+        }
+      });
+
+      // 폴더 옵션 업데이트
+      const folders = Array.from(new Set((JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')).map(x=>x.folder).filter(Boolean)));
+      updateFolderSelect(folders);
+    }
+
+    folderSelect.onchange = renderGrid;
+
+    // HTML 편집기 로직
+    const htmlEditBtn = document.getElementById('html-edit-btn');
+    const htmlEditor = document.getElementById('html-editor');
+    const htmlPreview = document.getElementById('html-preview');
+    let htmlEditing = false;
+
+    htmlEditBtn.onclick = () => {
+      htmlEditing = !htmlEditing;
+      if (htmlEditing) {
+        htmlEditor.style.display = 'block';
+        htmlPreview.style.display = 'none';
+        htmlEditBtn.textContent = '마침';
+        htmlEditor.value = htmlPreview.innerHTML;
+      } else {
+        htmlPreview.innerHTML = htmlEditor.value;
+        htmlEditor.style.display = 'none';
+        htmlPreview.style.display = 'block';
+        htmlEditBtn.textContent = '편집';
+        localStorage.setItem(HTML_KEY, htmlPreview.innerHTML);
+      }
+    };
+
+    // 페이지 로드 시 localStorage에서 htmlContent를 불러오기!
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGrid();
+      const savedHtml = localStorage.getItem(HTML_KEY);
+      if (savedHtml) {
+        htmlPreview.innerHTML = savedHtml;
+        htmlEditor.value = savedHtml;
+      }
+    });
+  </script>
+
+     
+     
+    </div>
+
+
+
+
+   
 
     <!-- 화면 5 -->
     <div id="screen-block-5" class="screen-block">
@@ -219,3 +711,4 @@
   </script>
 </body>
 </html>
+

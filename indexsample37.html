@@ -540,11 +540,127 @@
 
    
 
+
+
+
+   
     <!-- 화면 2 -->
     <div id="screen-block-2" class="screen-block">
 
      
 
+
+
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 독립적인 스타일 적용 */
+    .media-grid {
+      column-count: 6; /* PC~대형 화면은 6개 */
+      column-gap: 10px;
+      margin: 40px auto 20px;
+      width: 100%;
+      max-width: 1300px;
+      min-height: 400px;
+    }
+
+    .grid-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      position: relative;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .grid-item a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .grid-item img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .edit-btn {
+      display: none !important; /* 무조건 숨김 */
+    }
+
+    /* 반응형: 화면 폭에 따라 열 개수 자동 조정 */
+    @media (max-width: 1600px) {
+      .media-grid { column-count: 5; }
+    }
+    @media (max-width: 1200px) {
+      .media-grid { column-count: 4; }
+    }
+    @media (max-width: 900px) {
+      .media-grid { column-count: 3; }
+    }
+    @media (max-width: 700px) {
+      .media-grid { column-count: 2; }
+    }
+    @media (max-width: 450px) {
+      .media-grid { column-count: 2; }
+    }
+    @media (max-width: 350px) {
+      .media-grid { column-count: 1; }
+    }
+  </style>
+
+  <!-- 독립적으로 사용할 수 있는 그리드 -->
+  <div class="media-grid" id="media-grid">
+    <div class="grid-item">
+      <a href="https://naver.com" target="_blank" rel="noopener">
+        <img src="https://dimg.donga.com/a/390/390/95/1/ugc/CDB/WOMAN/Article/68/37/b9/2d/6837b92d1df6d2738e25.jpg" alt="" />
+      </a>
+      <button class="edit-btn">수정</button>
+    </div>
+    <div class="grid-item">
+      <a href="https://daum.net" target="_blank" rel="noopener">
+        <img src="https://dimg.donga.com/ugc/CDB/WOMAN/Article/68/24/5d/04/68245d041beca0a0a0a.jpg" alt="" />
+      </a>
+      <button class="edit-btn">수정</button>
+    </div>
+    <div class="grid-item">
+      <a href="https://google.com" target="_blank" rel="noopener">
+        <img src="https://dimg.donga.com/ugc/CDB/WOMAN/Article/68/24/5d/04/68245d041beca0a0a0a.jpg" alt="" />
+      </a>
+      <button class="edit-btn">수정</button>
+    </div>
+    <div class="grid-item">
+      <a href="https://daum.net" target="_blank" rel="noopener">
+        <img src="https://dimg.donga.com/ugc/CDB/WOMAN/Article/68/24/5d/04/68245d041beca0a0a0a.jpg" alt="" />
+      </a>
+      <button class="edit-btn">수정</button>
+    </div>
+    <div class="grid-item">
+      <a href="https://m.singleskorea.com/article/719953/THESINGLE" target="_blank" rel="noopener">
+        <img src="https://tbc.imgdl.xcache.kinxcdn.com/cdn001/20250528/967391387_USMEF_%E1%84%8B%E1%85%A9%E1%84%85%E1%85%A6%E1%86%AB%E1%84%8C%E1%85%B5%E1%84%86%E1%85%B5%E1%84%90%E1%85%B3%E1%84%87%E1%85%A9%E1%86%AF.jpg" alt="" />
+      </a>
+      <button class="edit-btn">수정</button>
+    </div>
+    <!-- 추가 grid-item들 원하는 만큼 복붙! -->
+  </div>
+
+
+     
   
 
 

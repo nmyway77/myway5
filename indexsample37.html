@@ -551,6 +551,7 @@
 
 
 
+ 
   <style>
     body {
       font-family: Helvetica, Arial, sans-serif;
@@ -559,8 +560,8 @@
       padding: 0;
     }
 
-    /* 독립적인 스타일 적용 */
-    .media-grid {
+    /* 화면2에만 적용되는 고유 스타일 */
+    #media-grid2 {
       column-count: 6; /* PC~대형 화면은 6개 */
       column-gap: 10px;
       margin: 40px auto 20px;
@@ -569,7 +570,7 @@
       min-height: 400px;
     }
 
-    .grid-item {
+    #media-grid2 .grid-item {
       break-inside: avoid;
       margin-bottom: 10px;
       position: relative;
@@ -580,12 +581,12 @@
       transition: box-shadow 0.2s;
     }
 
-    .grid-item a {
+    #media-grid2 .grid-item a {
       display: block;
       text-decoration: none;
     }
 
-    .grid-item img {
+    #media-grid2 .grid-item img {
       width: 100%;
       height: auto;
       display: block;
@@ -594,38 +595,38 @@
       transition: transform 0.2s;
     }
 
-    .grid-item img:hover {
+    #media-grid2 .grid-item img:hover {
       transform: scale(1.03);
       box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
 
-    .edit-btn {
+    #media-grid2 .edit-btn {
       display: none !important; /* 무조건 숨김 */
     }
 
     /* 반응형: 화면 폭에 따라 열 개수 자동 조정 */
     @media (max-width: 1600px) {
-      .media-grid { column-count: 5; }
+      #media-grid2 { column-count: 5; }
     }
     @media (max-width: 1200px) {
-      .media-grid { column-count: 4; }
+      #media-grid2 { column-count: 4; }
     }
     @media (max-width: 900px) {
-      .media-grid { column-count: 3; }
+      #media-grid2 { column-count: 3; }
     }
     @media (max-width: 700px) {
-      .media-grid { column-count: 2; }
+      #media-grid2 { column-count: 2; }
     }
     @media (max-width: 450px) {
-      .media-grid { column-count: 2; }
+      #media-grid2 { column-count: 2; }
     }
     @media (max-width: 350px) {
-      .media-grid { column-count: 1; }
+      #media-grid2 { column-count: 1; }
     }
   </style>
 
-  <!-- 독립적으로 사용할 수 있는 그리드 -->
-  <div class="media-grid" id="media-grid">
+  <!-- 화면2에만 표시되는 그리드 -->
+  <div id="media-grid2">
     <div class="grid-item">
       <a href="https://naver.com" target="_blank" rel="noopener">
         <img src="https://dimg.donga.com/a/390/390/95/1/ugc/CDB/WOMAN/Article/68/37/b9/2d/6837b92d1df6d2738e25.jpg" alt="" />
@@ -658,6 +659,7 @@
     </div>
     <!-- 추가 grid-item들 원하는 만큼 복붙! -->
   </div>
+
 
 
      
